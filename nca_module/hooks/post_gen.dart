@@ -4,4 +4,7 @@ void run(HookContext context) {
   context.logger.info(
     'You must include this module in the main app module imports array.',
   );
+  context.logger.info(
+    'You must include this module in the schema.prisma.',
+  );
 }

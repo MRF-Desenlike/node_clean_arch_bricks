@@ -6,6 +6,7 @@ import {
 } from '@nestjs/platform-fastify'
 import { applyGlobalConfig } from './global-config'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
+import { EnvConfigService } from './shared/infrastructure/env-config/env-config.service'
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
@@ -14,10 +15,7 @@ async function bootstrap() {
   )
 
   const config = new DocumentBuilder()
-    .setTitle('NestJS DDD Clean Architecture API')
-    .setDescription(
-      'Node.js Rest API - NestJs, Typescript, DDD, Clean Architecture and Automated Tests',
-    )
+    .setTitle('{{name}} API')
     .setVersion('1.0.0')
     .addBearerAuth({
       description: 'Infomar o JWT para autorizar o acesso',
@@ -31,7 +29,10 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config)
   SwaggerModule.setup('api', app, document)
 
+  const envConfigService = app.get(EnvConfigService)
+  const port = envConfigService.getAppPort()
+
   applyGlobalConfig(app)
-  await app.listen(3000, '0.0.0.0')
+  await app.listen(port, '0.0.0.0')
 }
 bootstrap()

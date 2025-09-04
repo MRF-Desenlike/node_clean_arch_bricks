@@ -1,20 +1,27 @@
 import { DynamicModule, Module } from '@nestjs/common'
 import { EnvConfigService } from './env-config.service'
 import { ConfigModule, ConfigModuleOptions } from '@nestjs/config'
-import { join } from 'node:path'
+import { resolve } from 'node:path'
 
 @Module({
   imports: [ConfigModule],
   providers: [EnvConfigService],
   exports: [EnvConfigService],
 })
-export class EnvConfigModule extends ConfigModule {
+export class EnvConfigModule {
   static forRoot(options: ConfigModuleOptions = {}): DynamicModule {
-    return super.forRoot({
-      ...options,
-      envFilePath: [
-        join(__dirname, `../../../../.env.${process.env.NODE_ENV}`),
+    const envFile = resolve(process.cwd(), `.env.${process.env.NODE_ENV ?? 'development'}`)
+
+    return {
+      module: EnvConfigModule,
+      imports: [
+        ConfigModule.forRoot({
+          ...options,
+          envFilePath: [envFile],
+        }),
       ],
-    })
+      providers: [EnvConfigService],
+      exports: [EnvConfigService, ConfigModule],
+    }
   }
 }
