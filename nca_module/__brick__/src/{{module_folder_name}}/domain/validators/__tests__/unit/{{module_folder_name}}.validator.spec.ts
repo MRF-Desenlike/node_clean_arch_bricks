@@ -118,7 +118,7 @@ describe('{{module_name.pascalCase()}}Validator unit tests', () => {
     ])
   })
 
-  it('Valid case for item rules', () => {
+  it('Valid case for {{module_name}} rules', () => {
     const isValid = sut.validate(props)
     expect(isValid).toBeTruthy()
     expect(sut.validatedData).toStrictEqual(new {{module_name.pascalCase()}}Rules(props))

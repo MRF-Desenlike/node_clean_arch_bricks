@@ -52,7 +52,7 @@ describe('List{{module_name.pascalCase()}}UseCase unit tests', () => {
     })
   })
 
-  it('should return the items ordered by createdAt', async () => {
+  it('should return the {{module_name}}s ordered by createdAt', async () => {
     const createdAt = new Date()
     const items = [
       new {{module_name.pascalCase()}}Entity({{module_name.pascalCase()}}DataBuilder({ createdAt })),
@@ -71,7 +71,7 @@ describe('List{{module_name.pascalCase()}}UseCase unit tests', () => {
     })
   })
 
-  it('should return the items using pagination, sort and filter', async () => {
+  it('should return the {{module_name}}s using pagination, sort and filter', async () => {
     const items = [
       new {{module_name.pascalCase()}}Entity({{module_name.pascalCase()}}DataBuilder({ name: 'a' })),
       new {{module_name.pascalCase()}}Entity({{module_name.pascalCase()}}DataBuilder({ name: 'AA' })),

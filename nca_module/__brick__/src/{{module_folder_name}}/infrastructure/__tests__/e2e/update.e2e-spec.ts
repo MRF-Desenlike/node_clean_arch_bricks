@@ -59,7 +59,7 @@ describe('{{module_name.pascalCase()}}Controller e2e tests', () => {
   })
 
   describe('PUT /{{module_folder_name}}/:id', () => {
-    it('should update a item', async () => {
+    it('should update a {{module_name}}', async () => {
       update{{module_name.pascalCase()}}Dto.name = 'test name'
       const res = await request(app.getHttpServer())
         .put(`/{{module_folder_name}}/${entity._id}`)

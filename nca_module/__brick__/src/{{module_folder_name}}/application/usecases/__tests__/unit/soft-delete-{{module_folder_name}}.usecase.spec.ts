@@ -19,7 +19,7 @@ describe('SoftDelete{{module_name.pascalCase()}}UseCase unit tests', () => {
     )
   })
 
-  it('Should soft delete an item', async () => {
+  it('Should soft delete an {{module_name}}', async () => {
     const entity = new {{module_name.pascalCase()}}Entity({{module_name.pascalCase()}}DataBuilder({}))
     repository.items = [entity]
 

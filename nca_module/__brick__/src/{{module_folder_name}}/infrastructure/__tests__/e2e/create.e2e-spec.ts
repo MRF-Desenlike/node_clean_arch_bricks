@@ -46,7 +46,7 @@ describe('{{module_name.pascalCase()}}Controller e2e tests', () => {
   })
 
   describe('POST /{{module_folder_name}}', () => {
-    it('should create a item', async () => {
+    it('should create a {{module_name}}', async () => {
       const res = await request(app.getHttpServer())
         .post('/{{module_folder_name}}')
         .send({{module_name.camelCase()}}Dto)

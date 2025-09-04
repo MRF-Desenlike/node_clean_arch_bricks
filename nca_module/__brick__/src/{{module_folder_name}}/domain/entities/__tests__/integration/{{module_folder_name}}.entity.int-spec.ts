@@ -4,7 +4,7 @@ import { EntityValidationError } from '@/shared/domain/errors/validation-error'
 
 describe('{{module_name.pascalCase()}}Entity integration tests', () => {
   describe('Constructor method', () => {
-    it('Should throw an error when creating a item with invalid name', () => {
+    it('Should throw an error when creating a {{module_name}} with invalid name', () => {
       let props: {{module_name.pascalCase()}}Props = {
         ...{{module_name.pascalCase()}}DataBuilder({}),
         name: null,
@@ -30,7 +30,7 @@ describe('{{module_name.pascalCase()}}Entity integration tests', () => {
       expect(() => new {{module_name.pascalCase()}}Entity(props)).toThrowError(EntityValidationError)
     })
 
-    it('Should throw an error when creating a item with invalid email', () => {
+    it('Should throw an error when creating a {{module_name}} with invalid email', () => {
       let props: {{module_name.pascalCase()}}Props = {
         ...{{module_name.pascalCase()}}DataBuilder({}),
         email: null,
@@ -56,7 +56,7 @@ describe('{{module_name.pascalCase()}}Entity integration tests', () => {
       expect(() => new {{module_name.pascalCase()}}Entity(props)).toThrowError(EntityValidationError)
     })
 
-    it('Should throw an error when creating a item with invalid createdAt', () => {
+    it('Should throw an error when creating a {{module_name}} with invalid createdAt', () => {
       let props: {{module_name.pascalCase()}}Props = {
         ...{{module_name.pascalCase()}}DataBuilder({}),
         createdAt: '2023' as any,
@@ -70,7 +70,7 @@ describe('{{module_name.pascalCase()}}Entity integration tests', () => {
       expect(() => new {{module_name.pascalCase()}}Entity(props)).toThrowError(EntityValidationError)
     })
 
-    it('Should a valid item', () => {
+    it('Should a valid {{module_name}}', () => {
       expect.assertions(0)
 
       const props: {{module_name.pascalCase()}}Props = {
@@ -81,7 +81,7 @@ describe('{{module_name.pascalCase()}}Entity integration tests', () => {
   })
 
   describe('Update method', () => {
-    it('Should throw an error when update a item with invalid name', () => {
+    it('Should throw an error when update a {{module_name}} with invalid name', () => {
       const entity = new {{module_name.pascalCase()}}Entity({{module_name.pascalCase()}}DataBuilder({}))
       expect(() => entity.update(null)).toThrowError(EntityValidationError)
       expect(() => entity.update('')).toThrowError(EntityValidationError)
@@ -91,7 +91,7 @@ describe('{{module_name.pascalCase()}}Entity integration tests', () => {
       )
     })
 
-    it('Should a valid item', () => {
+    it('Should a valid {{module_name}}', () => {
       expect.assertions(0)
 
       const props: {{module_name.pascalCase()}}Props = {

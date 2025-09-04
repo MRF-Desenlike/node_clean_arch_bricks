@@ -19,7 +19,7 @@ describe('Get{{module_name.pascalCase()}}UseCase unit tests', () => {
     )
   })
 
-  it('Should be able to get item profile', async () => {
+  it('Should be able to get {{module_name}} profile', async () => {
     const spyFindById = jest.spyOn(repository, 'findById')
     const items = [new {{module_name.pascalCase()}}Entity({{module_name.pascalCase()}}DataBuilder({}))]
     repository.items = items

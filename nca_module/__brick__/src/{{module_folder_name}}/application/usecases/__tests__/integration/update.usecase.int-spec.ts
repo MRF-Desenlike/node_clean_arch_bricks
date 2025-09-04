@@ -37,7 +37,7 @@ describe('Update{{module_name.pascalCase()}}UseCase integration tests', () => {
     ).rejects.toThrow(new NotFoundError('{{module_name.pascalCase()}}Model not found using ID fakeId'))
   })
 
-  it('should update a item', async () => {
+  it('should update a {{module_name}}', async () => {
     const entity = new {{module_name.pascalCase()}}Entity({{module_name.pascalCase()}}DataBuilder({}))
     const model = await prismaService.{{module_name.camelCase()}}.create({
       data: entity.toJSON(),

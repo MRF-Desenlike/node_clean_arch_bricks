@@ -31,7 +31,7 @@ describe('List{{module_name.pascalCase()}}UseCase integration tests', () => {
     await module.close()
   })
 
-  it('should return the items ordered by createdAt', async () => {
+  it('should return the {{module_name}}s ordered by createdAt', async () => {
     const createdAt = new Date()
     const entities: {{module_name.pascalCase()}}Entity[] = []
     const arrange = Array(3).fill({{module_name.pascalCase()}}DataBuilder({}))

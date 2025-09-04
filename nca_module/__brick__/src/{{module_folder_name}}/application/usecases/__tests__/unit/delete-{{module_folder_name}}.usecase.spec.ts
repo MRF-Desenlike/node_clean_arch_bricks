@@ -19,7 +19,7 @@ describe('Delete{{module_name.pascalCase()}}UseCase unit tests', () => {
     )
   })
 
-  it('Should delete a item', async () => {
+  it('Should delete a {{module_name}}', async () => {
     const spyDelete = jest.spyOn(repository, 'delete')
     const items = [new {{module_name.pascalCase()}}Entity({{module_name.pascalCase()}}DataBuilder({}))]
     repository.items = items

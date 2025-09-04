@@ -34,7 +34,7 @@ describe('{{module_name.pascalCase()}}Controller unit tests', () => {
     expect(sut).toBeDefined()
   })
 
-  it('should create a item', async () => {
+  it('should create a {{module_name}}', async () => {
     const output: Create{{module_name.pascalCase()}}UseCase.Output = props
     const mockCreate{{module_name.pascalCase()}}UseCase = {
       execute: jest.fn().mockReturnValue(Promise.resolve(output)),
@@ -51,7 +51,7 @@ describe('{{module_name.pascalCase()}}Controller unit tests', () => {
     expect(mockCreate{{module_name.pascalCase()}}UseCase.execute).toHaveBeenCalledWith(input)
   })
 
-  it('should update a item', async () => {
+  it('should update a {{module_name}}', async () => {
     const output: Update{{module_name.pascalCase()}}UseCase.Output = props
     const mockUpdate{{module_name.pascalCase()}}UseCase = {
       execute: jest.fn().mockReturnValue(Promise.resolve(output)),
@@ -66,7 +66,7 @@ describe('{{module_name.pascalCase()}}Controller unit tests', () => {
     expect(mockUpdate{{module_name.pascalCase()}}UseCase.execute).toHaveBeenCalledWith({ id, ...input })
   })
 
-  it('should delete a item', async () => {
+  it('should delete a {{module_name}}', async () => {
     const output = undefined
     const mockDelete{{module_name.pascalCase()}}UseCase = {
       execute: jest.fn().mockReturnValue(Promise.resolve(output)),
@@ -79,7 +79,7 @@ describe('{{module_name.pascalCase()}}Controller unit tests', () => {
     })
   })
 
-  it('should gets a item', async () => {
+  it('should gets a {{module_name}}', async () => {
     const output: Get{{module_name.pascalCase()}}UseCase.Output = props
     const mockGet{{module_name.pascalCase()}}UseCase = {
       execute: jest.fn().mockReturnValue(Promise.resolve(output)),
@@ -93,7 +93,7 @@ describe('{{module_name.pascalCase()}}Controller unit tests', () => {
     })
   })
 
-  it('should list items', async () => {
+  it('should list {{module_name}}s', async () => {
     const output: List{{module_name.pascalCase()}}UseCase.Output = {
       items: [props],
       currentPage: 1,

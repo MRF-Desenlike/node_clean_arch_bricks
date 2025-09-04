@@ -19,7 +19,7 @@ describe('Restore{{module_name.pascalCase()}}UseCase unit tests', () => {
     )
   })
 
-  it('Should restore a soft deleted item', async () => {
+  it('Should restore a soft deleted {{module_name}}', async () => {
     const entity = new {{module_name.pascalCase()}}Entity({{module_name.pascalCase()}}DataBuilder({}))
     entity.softDelete() // Soft delete the entity first
     repository.items = [entity]

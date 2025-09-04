@@ -1,5 +1,7 @@
 import 'package:mason/mason.dart';
 
 void run(HookContext context) {
-  // TODO: add post-generation logic.
+  context.logger.info(
+    'You must include this module in the main app module imports array.',
+  );
 }

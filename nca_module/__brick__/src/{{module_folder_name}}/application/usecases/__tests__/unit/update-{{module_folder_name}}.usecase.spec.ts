@@ -26,7 +26,7 @@ describe('Update{{module_name.pascalCase()}}UseCase unit tests', () => {
     )
   })
 
-  it('Should update a item', async () => {
+  it('Should update a {{module_name}}', async () => {
     const spyUpdate = jest.spyOn(repository, 'update')
     const items = [new {{module_name.pascalCase()}}Entity({{module_name.pascalCase()}}DataBuilder({}))]
     repository.items = items

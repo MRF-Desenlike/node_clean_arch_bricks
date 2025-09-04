@@ -55,7 +55,7 @@ describe('{{module_name.pascalCase()}}PrismaRepository integration tests', () =>
     expect(result).toStrictEqual(entity.toJSON())
   })
 
-  it('should returns all items', async () => {
+  it('should returns all {{module_name}}s', async () => {
     const entity = new {{module_name.pascalCase()}}Entity({{module_name.pascalCase()}}DataBuilder({}))
     const new{{module_name.pascalCase()}} = await prismaService.{{module_name.camelCase()}}.create({
       data: entity.toJSON(),

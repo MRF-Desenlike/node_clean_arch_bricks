@@ -172,7 +172,7 @@ export class {{module_name.pascalCase()}}Controller {
   @ApiBearerAuth()
   @ApiResponse({
     status: 204,
-    description: 'Usuário deletado com sucesso (soft delete)',
+    description: '{{module_name}} deletado com sucesso (soft delete)',
   })
   @ApiResponse({
     status: 401,
@@ -180,7 +180,7 @@ export class {{module_name.pascalCase()}}Controller {
   })
   @ApiResponse({
     status: 404,
-    description: 'Usuário não encontrado',
+    description: '{{module_name}} não encontrado',
   })
   @UseGuards(AuthGuard)
   @HttpCode(204)
@@ -192,7 +192,7 @@ export class {{module_name.pascalCase()}}Controller {
   @ApiBearerAuth()
   @ApiResponse({
     status: 204,
-    description: 'Usuário restaurado com sucesso',
+    description: '{{module_name}} restaurado com sucesso',
   })
   @ApiResponse({
     status: 401,
@@ -200,7 +200,7 @@ export class {{module_name.pascalCase()}}Controller {
   })
   @ApiResponse({
     status: 404,
-    description: 'Usuário não encontrado',
+    description: '{{module_name}} não encontrado',
   })
   @UseGuards(AuthGuard)
   @HttpCode(204)

@@ -54,7 +54,7 @@ describe('{{module_name.pascalCase()}}Entity unit tests', () => {
     expect(sut.createdAt).toBeInstanceOf(Date)
   })
 
-  it('Should update a item', () => {
+  it('Should update a {{module_name}}', () => {
     expect({{module_name.pascalCase()}}Entity.validate).toHaveBeenCalled()
     sut.update('other name')
     expect(sut.props.name).toEqual('other name')

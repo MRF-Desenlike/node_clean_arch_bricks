@@ -13,7 +13,7 @@ describe('Create{{module_name.pascalCase()}}UseCase unit tests', () => {
     sut = new Create{{module_name.pascalCase()}}UseCase.UseCase(repository)
   })
 
-  it('Should create a item', async () => {
+  it('Should create a {{module_name}}', async () => {
     const spyInsert = jest.spyOn(repository, 'insert')
     const props = {{module_name.pascalCase()}}DataBuilder({})
     const result = await sut.execute({

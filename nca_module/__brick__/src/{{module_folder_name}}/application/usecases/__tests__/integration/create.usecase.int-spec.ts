@@ -27,7 +27,7 @@ describe('Create{{module_name.pascalCase()}}UseCase integration tests', () => {
     await module.close()
   })
 
-  it('should create a item', async () => {
+  it('should create a {{module_name}}', async () => {
     const props = {
       name: 'test name',
       email: 'a@a.com',

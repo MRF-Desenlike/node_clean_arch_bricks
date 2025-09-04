@@ -37,7 +37,7 @@ describe('Get{{module_name.pascalCase()}}UseCase integration tests', () => {
     )
   })
 
-  it('should returns a item', async () => {
+  it('should returns a {{module_name}}', async () => {
     const entity = new {{module_name.pascalCase()}}Entity({{module_name.pascalCase()}}DataBuilder({}))
     const model = await prismaService.{{module_name.camelCase()}}.create({
       data: entity.toJSON(),

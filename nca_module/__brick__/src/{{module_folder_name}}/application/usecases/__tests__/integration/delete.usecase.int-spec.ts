@@ -37,7 +37,7 @@ describe('DeleteUseCase integration tests', () => {
     )
   })
 
-  it('should delete a item', async () => {
+  it('should delete a {{module_name}}', async () => {
     const entity = new {{module_name.pascalCase()}}Entity({{module_name.pascalCase()}}DataBuilder({}))
     const new{{module_name.pascalCase()}} = await prismaService.{{module_name.camelCase()}}.create({
       data: entity.toJSON(),

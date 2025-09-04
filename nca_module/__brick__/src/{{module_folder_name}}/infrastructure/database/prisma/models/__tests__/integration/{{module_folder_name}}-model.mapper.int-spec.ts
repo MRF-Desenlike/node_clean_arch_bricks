@@ -31,12 +31,12 @@ describe('{{module_name.pascalCase()}}ModelMapper integration tests', () => {
     await prismaService.$disconnect()
   })
 
-  it('should throws error when item model is invalid', async () => {
+  it('should throws error when {{module_name}} model is invalid', async () => {
     const model: {{module_name.pascalCase()}} = Object.assign(props, { name: null })
     expect(() => {{module_name.pascalCase()}}ModelMapper.toEntity(model)).toThrowError(ValidationError)
   })
 
-  it('should convert a item model to a item entity', async () => {
+  it('should convert a {{module_name}} model to a {{module_name}} entity', async () => {
     const model: {{module_name.pascalCase()}} = await prismaService.{{module_name.camelCase()}}.create({
       data: props,
     })

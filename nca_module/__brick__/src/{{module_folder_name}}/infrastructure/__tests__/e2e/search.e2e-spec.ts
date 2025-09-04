@@ -54,7 +54,7 @@ describe('{{module_name.pascalCase()}}Controller e2e tests', () => {
   })
 
   describe('GET /{{module_folder_name}}', () => {
-    it('should return the items ordered by createdAt', async () => {
+    it('should return the {{module_name}}s ordered by createdAt', async () => {
       const createdAt = new Date()
       const entities: {{module_name.pascalCase()}}Entity[] = []
       const arrange = Array(3).fill({{module_name.pascalCase()}}DataBuilder({}))
@@ -92,7 +92,7 @@ describe('{{module_name.pascalCase()}}Controller e2e tests', () => {
       })
     })
 
-    it('should return the items ordered by createdAt', async () => {
+    it('should return the {{module_name}}s ordered by createdAt', async () => {
       const createdAt = new Date()
       const entities: {{module_name.pascalCase()}}Entity[] = []
       const arrange = ['test', 'a', 'TEST', 'b', 'TeSt']
