@@ -6,8 +6,7 @@ import { UseCase as DefaultUseCase } from '@/shared/application/usecases/use-cas
 
 export namespace Create{{module_name.pascalCase()}}UseCase {
   export type Input = {
-    {{#fields}}
-    {{ name.camelCase() }}{{#isOptional}}?{{/isOptional}}: {{ tsType }};
+    {{#fields}}{{ name.camelCase() }}{{#isOptional}}?{{/isOptional}}: {{ tsType }};
     {{/fields}}
   }
 

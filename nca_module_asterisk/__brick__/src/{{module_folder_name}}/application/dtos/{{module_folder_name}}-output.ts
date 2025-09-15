@@ -2,8 +2,8 @@ import { {{module_name.pascalCase()}}Entity } from '@/{{module_folder_name}}/dom
 
 export type {{module_name.pascalCase()}}Output = {
   id: number
-  tenant_id: number
-  name: string
+  {{#fields}}{{ name.camelCase() }}{{#isOptional}}?{{/isOptional}}: {{ tsType }};
+  {{/fields}}
   createdAt: Date
   updatedAt: Date
   deletedAt?: Date

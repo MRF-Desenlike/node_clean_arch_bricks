@@ -8,11 +8,9 @@ export class {{module_name.pascalCase()}}Presenter {
   @ApiProperty({ description: 'Identificação' })
   id: number
 
-  @ApiProperty({ description: 'E-mail' })
-  tenant_id: number
-
-  @ApiProperty({ description: 'Nome' })
-  name: string
+  {{#fields}}@ApiProperty({ description: '{{description}}' })
+  {{ name.camelCase() }}{{#isOptional}}?{{/isOptional}}: {{ tsType }};
+  {{/fields}}
 
   @ApiProperty({ description: 'Data de criação' })
   @Transform(({ value }: { value: Date }) => value.toISOString())
@@ -20,8 +18,8 @@ export class {{module_name.pascalCase()}}Presenter {
 
   constructor(output: {{module_name.pascalCase()}}Output) {
     this.id = output.id
-    this.tenant_id = output.tenant_id
-    this.name = output.name
+    {{#fields}}this.{{ name.camelCase() }} = output.{{ name.camelCase() }};
+    {{/fields}}
     this.createdAt = output.createdAt
   }
 }

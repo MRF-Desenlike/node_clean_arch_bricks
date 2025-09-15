@@ -5,8 +5,8 @@ import { {{module_name.pascalCase()}} } from '../../../../../shared/infrastructu
 export class {{module_name.pascalCase()}}ModelMapper {
   static toEntity(model: {{module_name.pascalCase()}}) {
     const data = {
-      tenant_id: model.tenant_id,
-      name: model.name,
+      {{#fields}}{{ name.camelCase() }}: model.{{ name.camelCase() }},
+      {{/fields}}
       createdAt: model.createdAt,
       updatedAt: model.updatedAt,
       deletedAt: model.deletedAt,

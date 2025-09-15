@@ -13,8 +13,7 @@ type Props = {
 export function {{module_name.pascalCase()}}OutputDataBuilder(props: Props = {}): {{module_name.pascalCase()}}Output {
   return {
     id: props.id ?? faker.string.uuid(),
-    {{#fields}}
-    {{ name.camelCase() }}: props.{{ name.camelCase() }} ?? faker.person.fullName(),
+    {{#fields}}{{ name.camelCase() }}: props.{{ name.camelCase() }} ?? faker.person.fullName(),
     {{/fields}}
     createdAt: props.createdAt ?? new Date(),
     updatedAt: props.updatedAt ?? new Date(),

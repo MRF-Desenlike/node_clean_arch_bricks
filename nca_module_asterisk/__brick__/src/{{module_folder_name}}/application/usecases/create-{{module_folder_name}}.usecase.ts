@@ -6,8 +6,8 @@ import { UseCase as DefaultUseCase } from '@/shared/application/usecases/use-cas
 
 export namespace Create{{module_name.pascalCase()}}UseCase {
   export type Input = {
-    tenant_id: number
-    name: string
+    {{#fields}}{{ name.camelCase() }}{{#isOptional}}?{{/isOptional}}: {{ tsType }};
+    {{/fields}}
   }
 
   export type Output = {{module_name.pascalCase()}}Output
@@ -18,11 +18,19 @@ export namespace Create{{module_name.pascalCase()}}UseCase {
     ) {}
 
     async execute(input: Input): Promise<Output> {
-      const { tenant_id, name } = input
+      const { 
+        {{#fields}}{{ name.camelCase() }},
+        {{/fields}}
+       } = input
 
-      if (!tenant_id || !name) {
-        throw new BadRequestError('Input data not provided')
+      {{#has_required}}
+      if (
+        {{#required_fields}}{{^isFirstRequired}} || {{/isFirstRequired}}!{{ name.camelCase() }}
+        {{/required_fields}}
+      ) {
+        throw new BadRequestError('Input data not provided');
       }
+      {{/has_required}}
 
       const entity = new {{module_name.pascalCase()}}Entity(
         Object.assign(input),

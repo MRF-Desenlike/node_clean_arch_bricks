@@ -3,8 +3,8 @@ import { {{module_name.pascalCase()}}ValidatorFactory } from '../validators/{{mo
 import { EntityValidationError } from '@/shared/domain/errors/validation-error'
 
 export type {{module_name.pascalCase()}}Props = {
-  tenant_id: number
-  name: string
+  {{#fields}}{{ name.camelCase() }}{{#isOptional}}?{{/isOptional}}: {{ tsType }};
+  {{/fields}}
   createdAt?: Date
   updatedAt?: Date
   deletedAt?: Date
@@ -18,20 +18,13 @@ export class {{module_name.pascalCase()}}Entity extends EntityAsterisk<{{module_
     this.props.updatedAt = this.props.updatedAt ?? new Date()
   }
 
-  update({
-    tenant_id,
-    name,
-  }: {
-    tenant_id?: number
-    name?: string
-  }): void {
+  update(data: {{module_name.pascalCase()}}Props): void {
     {{module_name.pascalCase()}}Entity.validate({
       ...this.props,
-      tenant_id,
-      name,
+      ...data,
     })
-    this.name = name ?? this.name,
-    this.tenant_id = tenant_id ?? this.props.tenant_id,
+    {{#fields}}this.{{ name.camelCase() }} = data.{{ name.camelCase() }} ?? this.{{ name.camelCase() }};
+    {{/fields}}
     this.touch()
   }
 

@@ -116,8 +116,7 @@ void run(HookContext context) {
   }
 
   // ==== Coleta de campos ====
-  logger.info(
-      'Enter the entity parameters. Supported types: string, int, float, boolean, date, datetime, uuid, json, decimal');
+  logger.info('Enter the entity parameters.');
 
   final fields = <Map<String, dynamic>>[];
 
