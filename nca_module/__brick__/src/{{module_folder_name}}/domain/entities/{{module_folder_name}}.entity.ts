@@ -3,9 +3,8 @@ import { {{module_name.pascalCase()}}ValidatorFactory } from '../validators/{{mo
 import { EntityValidationError } from '@/shared/domain/errors/validation-error'
 
 export type {{module_name.pascalCase()}}Props = {
-  name: string
-  email: string
-  password: string
+  {{#fields}}{{ name.camelCase() }}{{#isOptional}}?{{/isOptional}}: {{ tsType }};
+  {{/fields}}
   createdAt?: Date
   updatedAt?: Date
   deletedAt?: Date
@@ -19,12 +18,13 @@ export class {{module_name.pascalCase()}}Entity extends Entity<{{module_name.pas
     this.props.updatedAt = this.props.updatedAt ?? new Date()
   }
 
-  update(value: string): void {
+  update(data: {{module_name.pascalCase()}}Props): void {
     {{module_name.pascalCase()}}Entity.validate({
       ...this.props,
-      name: value,
+      ...data,
     })
-    this.name = value
+    {{#fields}}this.{{ name.camelCase() }} = data.{{ name.camelCase() }} ?? this.{{ name.camelCase() }};
+    {{/fields}}
     this.touch()
   }
 
@@ -46,25 +46,14 @@ export class {{module_name.pascalCase()}}Entity extends Entity<{{module_name.pas
     this.props.updatedAt = new Date()
   }
 
-  get name() {
-    return this.props.name
+  {{#fields}}
+  get {{ name.camelCase() }}() {
+    return this.props.{{ name.camelCase() }}
   }
-
-  private set name(value: string) {
-    this.props.name = value
+  private set {{ name.camelCase() }}(value: {{ tsType }}) {
+    this.props.{{ name.camelCase() }} = value
   }
-
-  get email() {
-    return this.props.email
-  }
-
-  get password() {
-    return this.props.password
-  }
-
-  private set password(value: string) {
-    this.props.password = value
-  }
+  {{/fields}}
 
   get createdAt() {
     return this.props.createdAt

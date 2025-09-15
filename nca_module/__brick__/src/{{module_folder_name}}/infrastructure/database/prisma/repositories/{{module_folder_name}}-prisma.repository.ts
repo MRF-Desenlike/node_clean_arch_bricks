@@ -7,7 +7,12 @@ import { ConflictError } from '@/shared/domain/errors/conflict-error'
 import { StringUtils } from '@/shared/utils/string.utils'
 
 export class {{module_name.pascalCase()}}PrismaRepository implements {{module_name.pascalCase()}}Repository.Repository {
-  sortableFields: string[] = ['name', 'createdAt', 'updatedAt']
+  sortableFields: string[] = [
+    {{#fields}}'{{ name.camelCase() }}',
+    {{/fields}}
+    'createdAt', 
+    'updatedAt'
+  ]
 
   constructor(private prismaService: PrismaService) {}
 

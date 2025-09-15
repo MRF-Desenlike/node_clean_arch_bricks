@@ -3,9 +3,8 @@ import { {{module_name.pascalCase()}}Output } from '@/{{module_folder_name}}/app
 
 type Props = {
   id?: string
-  name?: string
-  email?: string
-  password?: string
+  {{#fields}}{{ name.camelCase() }}?: {{ tsType }};
+  {{/fields}}
   createdAt?: Date
   updatedAt?: Date
   deletedAt?: Date
@@ -14,9 +13,9 @@ type Props = {
 export function {{module_name.pascalCase()}}OutputDataBuilder(props: Props = {}): {{module_name.pascalCase()}}Output {
   return {
     id: props.id ?? faker.string.uuid(),
-    name: props.name ?? faker.person.fullName(),
-    email: props.email ?? faker.internet.email(),
-    password: props.password ?? faker.internet.password(),
+    {{#fields}}
+    {{ name.camelCase() }}: props.{{ name.camelCase() }} ?? faker.person.fullName(),
+    {{/fields}}
     createdAt: props.createdAt ?? new Date(),
     updatedAt: props.updatedAt ?? new Date(),
     deletedAt: props.deletedAt,

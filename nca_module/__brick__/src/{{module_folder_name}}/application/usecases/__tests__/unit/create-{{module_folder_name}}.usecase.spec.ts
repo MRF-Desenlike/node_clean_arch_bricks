@@ -17,9 +17,8 @@ describe('Create{{module_name.pascalCase()}}UseCase unit tests', () => {
     const spyInsert = jest.spyOn(repository, 'insert')
     const props = {{module_name.pascalCase()}}DataBuilder({})
     const result = await sut.execute({
-      name: props.name,
-      email: props.email,
-      password: props.password,
+      {{#fields}}{{ name.camelCase() }}: props.{{ name.camelCase() }},
+      {{/fields}}
     })
     expect(result.id).toBeDefined()
     expect(result.createdAt).toBeInstanceOf(Date)

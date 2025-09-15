@@ -15,94 +15,34 @@ describe('{{module_name.pascalCase()}}Validator unit tests', () => {
     props = {{module_name.pascalCase()}}DataBuilder({})
   })
 
-  it('Invalidation cases for name field', () => {
+  {{#fields}}
+  it('Invalidation cases for {{ name.camelCase() }} field', () => {
     let isValid = sut.validate(null as any)
     expect(isValid).toBeFalsy()
-    expect(sut.errors['name']).toStrictEqual([
-      'name should not be empty',
-      'name must be a string',
-      'name must be shorter than or equal to 255 characters',
+    expect(sut.errors['{{ name.camelCase() }}']).toStrictEqual([
+      '{{ name.camelCase() }} should not be empty',
+      '{{ name.camelCase() }} must be a string',
+      '{{ name.camelCase() }} must be shorter than or equal to 255 characters',
     ])
 
     isValid = sut.validate({ ...props, name: '' })
     expect(isValid).toBeFalsy()
-    expect(sut.errors['name']).toStrictEqual(['name should not be empty'])
+    expect(sut.errors['{{ name.camelCase() }}']).toStrictEqual(['{{ name.camelCase() }} should not be empty'])
 
-    isValid = sut.validate({ ...props, name: 10 as any })
+    isValid = sut.validate({ ...props, {{ name.camelCase() }}: 10 as any })
     expect(isValid).toBeFalsy()
-    expect(sut.errors['name']).toStrictEqual([
-      'name must be a string',
-      'name must be shorter than or equal to 255 characters',
+    expect(sut.errors['{{ name.camelCase() }}']).toStrictEqual([
+      '{{ name.camelCase() }} must be a string',
+      '{{ name.camelCase() }} must be shorter than or equal to 255 characters',
     ])
 
-    isValid = sut.validate({ ...props, name: 'a'.repeat(256) })
+    isValid = sut.validate({ ...props, {{ name.camelCase() }}: 'a'.repeat(256) })
     expect(isValid).toBeFalsy()
-    expect(sut.errors['name']).toStrictEqual([
-      'name must be shorter than or equal to 255 characters',
-    ])
-  })
-
-  it('Invalidation cases for email field', () => {
-    let isValid = sut.validate(null as any)
-    expect(isValid).toBeFalsy()
-    expect(sut.errors['email']).toStrictEqual([
-      'email should not be empty',
-      'email must be an email',
-      'email must be a string',
-      'email must be shorter than or equal to 255 characters',
-    ])
-
-    isValid = sut.validate({ ...props, email: '' })
-    expect(isValid).toBeFalsy()
-    expect(sut.errors['email']).toStrictEqual([
-      'email should not be empty',
-      'email must be an email',
-    ])
-
-    isValid = sut.validate({ ...props, email: 10 as any })
-    expect(isValid).toBeFalsy()
-    expect(sut.errors['email']).toStrictEqual([
-      'email must be an email',
-      'email must be a string',
-      'email must be shorter than or equal to 255 characters',
-    ])
-
-    isValid = sut.validate({ ...props, email: 'a'.repeat(256) })
-    expect(isValid).toBeFalsy()
-    expect(sut.errors['email']).toStrictEqual([
-      'email must be an email',
-      'email must be shorter than or equal to 255 characters',
+    expect(sut.errors['{{ name.camelCase() }}']).toStrictEqual([
+      '{{ name.camelCase() }} must be shorter than or equal to 255 characters',
     ])
   })
-
-  it('Invalidation cases for password field', () => {
-    let isValid = sut.validate(null as any)
-    expect(isValid).toBeFalsy()
-    expect(sut.errors['password']).toStrictEqual([
-      'password should not be empty',
-      'password must be a string',
-      'password must be shorter than or equal to 100 characters',
-    ])
-
-    isValid = sut.validate({ ...props, password: '' })
-    expect(isValid).toBeFalsy()
-    expect(sut.errors['password']).toStrictEqual([
-      'password should not be empty',
-    ])
-
-    isValid = sut.validate({ ...props, password: 10 as any })
-    expect(isValid).toBeFalsy()
-    expect(sut.errors['password']).toStrictEqual([
-      'password must be a string',
-      'password must be shorter than or equal to 100 characters',
-    ])
-
-    isValid = sut.validate({ ...props, password: 'a'.repeat(256) })
-    expect(isValid).toBeFalsy()
-    expect(sut.errors['password']).toStrictEqual([
-      'password must be shorter than or equal to 100 characters',
-    ])
-  })
+  {{/fields}}
 
   it('Invalidation cases for createdAt field', () => {
     let isValid = sut.validate({ ...props, createdAt: 10 as any })

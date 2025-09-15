@@ -28,9 +28,9 @@ describe('Get{{module_name.pascalCase()}}UseCase unit tests', () => {
     expect(spyFindById).toHaveBeenCalledTimes(1)
     expect(result).toMatchObject({
       id: items[0].id,
-      name: items[0].name,
-      email: items[0].email,
-      password: items[0].password,
+      {{#fields}}
+      {{ name.camelCase() }}: items[0].{{ name.camelCase() }},
+      {{/fields}} 
       createdAt: items[0].createdAt,
     })
   })

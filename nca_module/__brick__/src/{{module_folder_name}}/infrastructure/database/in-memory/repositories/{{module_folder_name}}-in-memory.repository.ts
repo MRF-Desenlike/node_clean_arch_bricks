@@ -10,7 +10,12 @@ export class {{module_name.pascalCase()}}InMemoryRepository
   extends InMemorySearchableRepository<{{module_name.pascalCase()}}Entity>
   implements {{module_name.pascalCase()}}Repository.Repository
 {
-  sortableFields: string[] = ['name', 'createdAt', 'updatedAt']
+  sortableFields: string[] = [
+    {{#fields}}'{{ name.camelCase() }}',
+    {{/fields}}
+    'createdAt', 
+    'updatedAt'
+  ]
 
   async search(
     props: {{module_name.pascalCase()}}Repository.SearchParams,

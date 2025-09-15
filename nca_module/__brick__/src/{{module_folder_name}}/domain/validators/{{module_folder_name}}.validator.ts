@@ -1,37 +1,29 @@
 import { ClassValidatorFields } from '@/shared/domain/validators/class-validator-fields'
 import { {{module_name.pascalCase()}}Props } from '../entities/{{module_folder_name}}.entity'
-import {
-  IsDate,
-  IsEmail,
-  IsNotEmpty,
-  IsOptional,
-  IsString,
-  MaxLength,
-} from 'class-validator'
+{{#needs_type_import}}import { Type } from 'class-transformer'{{/needs_type_import}}
+{{#has_validator_imports}}import { IsDate, {{validator_imports_csv}} } from 'class-validator'{{/has_validator_imports}}
 
 export class {{module_name.pascalCase()}}Rules {
-  @MaxLength(255)
-  @IsString()
-  @IsNotEmpty()
-  name: string
-
-  @MaxLength(255)
-  @IsString()
-  @IsEmail()
-  @IsNotEmpty()
-  email: string
-
-  @MaxLength(100)
-  @IsString()
-  @IsNotEmpty()
-  password: string
+  {{#fields}}
+  {{#validators}}@{{.}}
+  {{/validators}}{{#useTypeDate}}@Type(() => Date)
+  {{/useTypeDate}}{{name.camelCase()}}{{#isOptional}}?{{/isOptional}}: {{tsType}};
+  {{/fields}}
 
   @IsDate()
   @IsOptional()
   createdAt?: Date
 
-  constructor({ email, name, password, createdAt }: {{module_name.pascalCase()}}Props) {
-    Object.assign(this, { email, name, password, createdAt })
+  constructor({ 
+    {{#fields}}{{ name.camelCase() }},
+    {{/fields}}
+    createdAt 
+  }: {{module_name.pascalCase()}}Props) {
+    Object.assign(this, { 
+      {{#fields}}{{ name.camelCase() }},
+      {{/fields}}
+      createdAt 
+    })
   }
 }
 

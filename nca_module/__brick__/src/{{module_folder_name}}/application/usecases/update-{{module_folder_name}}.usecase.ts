@@ -6,7 +6,8 @@ import { BadRequestError } from '@/shared/application/errors/bad-request-error'
 export namespace Update{{module_name.pascalCase()}}UseCase {
   export type Input = {
     id: string
-    name: string
+    {{#fields}}{{ name.camelCase() }}{{#isOptional}}?{{/isOptional}}: {{ tsType }};
+    {{/fields}}
   }
 
   export type Output = {{module_name.pascalCase()}}Output
@@ -15,11 +16,16 @@ export namespace Update{{module_name.pascalCase()}}UseCase {
     constructor(private {{module_name.camelCase()}}Repository: {{module_name.pascalCase()}}Repository.Repository) {}
 
     async execute(input: Input): Promise<Output> {
-      if (!input.name) {
-        throw new BadRequestError('Name not provided')
+      {{#has_required}}
+      if (
+        {{#required_fields}}{{^isFirstRequired}} || {{/isFirstRequired}}!input.{{ name.camelCase() }}
+        {{/required_fields}}
+      ) {
+        throw new BadRequestError('Input data not provided');
       }
+      {{/has_required}}
       const entity = await this.{{module_name.camelCase()}}Repository.findById(input.id)
-      entity.update(input.name)
+      entity.update(input)
       await this.{{module_name.camelCase()}}Repository.update(entity)
       return {{module_name.pascalCase()}}OutputMapper.toOutput(entity)
     }

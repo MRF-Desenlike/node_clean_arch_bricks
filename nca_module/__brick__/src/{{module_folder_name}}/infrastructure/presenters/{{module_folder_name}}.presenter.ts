@@ -5,23 +5,21 @@ import { ApiProperty } from '@nestjs/swagger'
 import { Transform } from 'class-transformer'
 
 export class {{module_name.pascalCase()}}Presenter {
-  @ApiProperty({ description: 'Identificação do usuário' })
+  @ApiProperty({ description: 'Identificação' })
   id: string
 
-  @ApiProperty({ description: 'Nome do usuário' })
-  name: string
-
-  @ApiProperty({ description: 'E-mail do usuário' })
-  email: string
+  {{#fields}}@ApiProperty({ description: '{{description}}' })
+  {{ name.camelCase() }}{{#isOptional}}?{{/isOptional}}: {{ tsType }};
+  {{/fields}}
 
   @ApiProperty({ description: 'Data de criação do usuário' })
   @Transform(({ value }: { value: Date }) => value.toISOString())
   createdAt: Date
-
+  
   constructor(output: {{module_name.pascalCase()}}Output) {
     this.id = output.id
-    this.name = output.name
-    this.email = output.email
+    {{#fields}}this.{{ name.camelCase() }} = output.{{ name.camelCase() }};
+    {{/fields}}
     this.createdAt = output.createdAt
   }
 }
