@@ -1,7 +1,7 @@
 import { {{module_name.pascalCase()}}Entity } from '@/{{module_folder_name}}/domain/entities/{{module_folder_name}}.entity'
 
 export type {{module_name.pascalCase()}}Output = {
-  id: number
+  id: number | string
   {{#fields}}{{ name }}{{#isOptional}}?{{/isOptional}}: {{ tsType }};
   {{/fields}}
   createdAt: Date

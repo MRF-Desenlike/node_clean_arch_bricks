@@ -3,7 +3,7 @@ import { UseCase as DefaultUseCase } from '@/shared/application/usecases/use-cas
 
 export namespace Restore{{module_name.pascalCase()}}UseCase {
   export type Input = {
-    id: number
+    id: number | string
   }
 
   export type Output = void

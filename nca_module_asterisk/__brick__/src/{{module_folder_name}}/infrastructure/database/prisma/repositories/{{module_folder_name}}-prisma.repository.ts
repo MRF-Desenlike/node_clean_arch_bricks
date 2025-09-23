@@ -128,12 +128,13 @@ export class {{module_name.pascalCase()}}PrismaRepository implements {{module_na
   }
 
   async insert(entity: {{module_name.pascalCase()}}Entity): Promise<void> {
+    const data = entity.toJSON()
     await this.prismaService.{{module_name.snakeCase()}}.create({
-      data: entity.toJSON(),
+      data: { ...data, id: data.id as number }
     })
   }
 
-  findById(id: number): Promise<{{module_name.pascalCase()}}Entity> {
+  findById(id: number | string): Promise<{{module_name.pascalCase()}}Entity> {
     return this._get(id)
   }
 
@@ -149,10 +150,10 @@ export class {{module_name.pascalCase()}}PrismaRepository implements {{module_na
     return models.map(model => {{module_name.pascalCase()}}ModelMapper.toEntity(model))
   }
 
-  async findByIdIncludingDeleted(id: number): Promise<{{module_name.pascalCase()}}Entity> {
+  async findByIdIncludingDeleted(id: number | string): Promise<{{module_name.pascalCase()}}Entity> {
     try {
       const {{module_name.camelCase()}} = await this.prismaService.{{module_name.snakeCase()}}.findUnique({
-        where: { id },
+        where: { id: id as number },
       })
       if (!{{module_name.camelCase()}}) {
         throw new NotFoundError(`{{module_name.pascalCase()}}Model not found using ID ${id}`)
@@ -168,44 +169,47 @@ export class {{module_name.pascalCase()}}PrismaRepository implements {{module_na
 
   async update(entity: {{module_name.pascalCase()}}Entity): Promise<void> {
     await this._get(entity._id)
+    const data = entity.toJSON()
     await this.prismaService.{{module_name.snakeCase()}}.update({
-      data: entity.toJSON(),
+      data: { ...data, id: data.id as number }
       where: {
-        id: entity._id,
+        id: entity._id as number,
       },
     })
   }
 
-  async delete(id: number): Promise<void> {
+  async delete(id: number | string): Promise<void> {
     await this._get(id)
     await this.prismaService.{{module_name.snakeCase()}}.delete({
-      where: { id },
+      where: { id: id as number },
     })
   }
 
-  async softDelete(id: number): Promise<void> {
+  async softDelete(id: number | string): Promise<void> {
     const entity = await this._get(id)
+    const data = entity.toJSON()
     entity.softDelete()
     await this.prismaService.{{module_name.snakeCase()}}.update({
-      data: entity.toJSON(),
-      where: { id },
+      data: { ...data, id: data.id as number }
+      where: { id: id as number },
     })
   }
 
-  async restore(id: number): Promise<void> {
+  async restore(id: number | string): Promise<void> {
     const entity = await this.findByIdIncludingDeleted(id)
+    const data = entity.toJSON()
     entity.restore()
     await this.prismaService.{{module_name.snakeCase()}}.update({
-      data: entity.toJSON(),
-      where: { id },
+      data: { ...data, id: data.id as number }
+      where: { id: id as number },
     })
   }
 
-  protected async _get(id: number): Promise<{{module_name.pascalCase()}}Entity> {
+  protected async _get(id: number | string): Promise<{{module_name.pascalCase()}}Entity> {
     try {
       const {{module_name.camelCase()}} = await this.prismaService.{{module_name.snakeCase()}}.findFirst({
         where: {
-          id,
+          id: id as number,
           deletedAt: null,
         },
       })

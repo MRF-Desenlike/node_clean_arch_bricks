@@ -19,9 +19,9 @@ export namespace {{module_name.pascalCase()}}Repository {
       SearchParams,
       SearchResult
     > {
-    softDelete(id: number): Promise<void>
-    restore(id: number): Promise<void>
+    softDelete(id: number | string): Promise<void>
+    restore(id: number | string): Promise<void>
     findAllIncludingDeleted(): Promise<{{module_name.pascalCase()}}Entity[]>
-    findByIdIncludingDeleted(id: number): Promise<{{module_name.pascalCase()}}Entity>
+    findByIdIncludingDeleted(id: number | string): Promise<{{module_name.pascalCase()}}Entity>
   }
 }

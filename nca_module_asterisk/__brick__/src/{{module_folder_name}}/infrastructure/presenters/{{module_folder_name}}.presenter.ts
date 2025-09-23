@@ -6,7 +6,7 @@ import { Transform } from 'class-transformer'
 
 export class {{module_name.pascalCase()}}Presenter {
   @ApiProperty({ description: 'Identificação' })
-  id: number
+  id: number | string
 
   {{#fields}}@ApiProperty({ description: '{{description}}' })
   {{ name }}{{#isOptional}}?{{/isOptional}}: {{ tsType }};

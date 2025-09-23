@@ -5,7 +5,7 @@ import { BadRequestError } from '@/shared/application/errors/bad-request-error'
 
 export namespace Update{{module_name.pascalCase()}}UseCase {
   export type Input = {
-    id: number
+    id: number | string
     {{#fields}}{{ name }}{{#isOptional}}?{{/isOptional}}: {{ tsType }};
     {{/fields}}
   }

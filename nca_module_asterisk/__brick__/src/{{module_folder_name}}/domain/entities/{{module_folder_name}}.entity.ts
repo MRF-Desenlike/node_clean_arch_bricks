@@ -11,7 +11,7 @@ export type {{module_name.pascalCase()}}Props = {
 }
 
 export class {{module_name.pascalCase()}}Entity extends EntityAsterisk<{{module_name.pascalCase()}}Props> {
-  constructor(public readonly props: {{module_name.pascalCase()}}Props, id?: number) {
+  constructor(public readonly props: {{module_name.pascalCase()}}Props, id?: number | string) {
     {{module_name.pascalCase()}}Entity.validate(props)
     super(props, id)
     this.props.createdAt = this.props.createdAt ?? new Date()

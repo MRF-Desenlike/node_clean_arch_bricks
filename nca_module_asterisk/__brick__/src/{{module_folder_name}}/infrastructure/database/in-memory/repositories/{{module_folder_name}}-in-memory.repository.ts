@@ -29,7 +29,7 @@ export class {{module_name.pascalCase()}}InMemoryRepository
     return result
   }
 
-  async findById(id: number): Promise<{{module_name.pascalCase()}}Entity> {
+  async findById(id: number | string): Promise<{{module_name.pascalCase()}}Entity> {
     const entity = this.items.find(item => item.id === id && !item.isDeleted())
     if (!entity) {
       throw new NotFoundError(`Entity not found using id ${id}`)
@@ -45,7 +45,7 @@ export class {{module_name.pascalCase()}}InMemoryRepository
     return this.items
   }
 
-  async findByIdIncludingDeleted(id: number): Promise<{{module_name.pascalCase()}}Entity> {
+  async findByIdIncludingDeleted(id: number | string): Promise<{{module_name.pascalCase()}}Entity> {
     const entity = this.items.find(item => item.id === id)
     if (!entity) {
       throw new NotFoundError(`Entity not found using id ${id}`)
@@ -53,12 +53,12 @@ export class {{module_name.pascalCase()}}InMemoryRepository
     return entity
   }
 
-  async softDelete(id: number): Promise<void> {
+  async softDelete(id: number | string): Promise<void> {
     const entity = await this.findById(id)
     entity.softDelete()
   }
 
-  async restore(id: number): Promise<void> {
+  async restore(id: number | string): Promise<void> {
     const entity = await this.findByIdIncludingDeleted(id)
     entity.restore()
   }
