@@ -26,7 +26,7 @@ export class {{module_name.pascalCase()}}PrismaRepository implements {{module_na
     // Para consistência com o teste, vamos replicar exatamente o comportamento do in-memory
     if (props.filter) {
       // Buscar todos os itens primeiro
-      const all{{module_name.pascalCase()}}s = await this.prismaService.{{module_name.camelCase()}}.findMany({
+      const all{{module_name.pascalCase()}}s = await this.prismaService.{{module_name.snakeCase()}}.findMany({
         where: { deletedAt: null },
       })
 
@@ -103,11 +103,11 @@ export class {{module_name.pascalCase()}}PrismaRepository implements {{module_na
     // Para queries sem filtro, usar a implementação normal do Prisma
     const whereClause = { deletedAt: null }
 
-    const count = await this.prismaService.{{module_name.camelCase()}}.count({
+    const count = await this.prismaService.{{module_name.snakeCase()}}.count({
       where: whereClause,
     })
 
-    const models = await this.prismaService.{{module_name.camelCase()}}.findMany({
+    const models = await this.prismaService.{{module_name.snakeCase()}}.findMany({
       where: whereClause,
       orderBy: {
         [orderByField]: orderByDir,
@@ -128,7 +128,7 @@ export class {{module_name.pascalCase()}}PrismaRepository implements {{module_na
   }
 
   async insert(entity: {{module_name.pascalCase()}}Entity): Promise<void> {
-    await this.prismaService.{{module_name.camelCase()}}.create({
+    await this.prismaService.{{module_name.snakeCase()}}.create({
       data: entity.toJSON(),
     })
   }
@@ -138,20 +138,20 @@ export class {{module_name.pascalCase()}}PrismaRepository implements {{module_na
   }
 
   async findAll(): Promise<{{module_name.pascalCase()}}Entity[]> {
-    const models = await this.prismaService.{{module_name.camelCase()}}.findMany({
+    const models = await this.prismaService.{{module_name.snakeCase()}}.findMany({
       where: { deletedAt: null },
     })
     return models.map(model => {{module_name.pascalCase()}}ModelMapper.toEntity(model))
   }
 
   async findAllIncludingDeleted(): Promise<{{module_name.pascalCase()}}Entity[]> {
-    const models = await this.prismaService.{{module_name.camelCase()}}.findMany()
+    const models = await this.prismaService.{{module_name.snakeCase()}}.findMany()
     return models.map(model => {{module_name.pascalCase()}}ModelMapper.toEntity(model))
   }
 
   async findByIdIncludingDeleted(id: number): Promise<{{module_name.pascalCase()}}Entity> {
     try {
-      const {{module_name.camelCase()}} = await this.prismaService.{{module_name.camelCase()}}.findUnique({
+      const {{module_name.camelCase()}} = await this.prismaService.{{module_name.snakeCase()}}.findUnique({
         where: { id },
       })
       if (!{{module_name.camelCase()}}) {
@@ -168,7 +168,7 @@ export class {{module_name.pascalCase()}}PrismaRepository implements {{module_na
 
   async update(entity: {{module_name.pascalCase()}}Entity): Promise<void> {
     await this._get(entity._id)
-    await this.prismaService.{{module_name.camelCase()}}.update({
+    await this.prismaService.{{module_name.snakeCase()}}.update({
       data: entity.toJSON(),
       where: {
         id: entity._id,
@@ -178,7 +178,7 @@ export class {{module_name.pascalCase()}}PrismaRepository implements {{module_na
 
   async delete(id: number): Promise<void> {
     await this._get(id)
-    await this.prismaService.{{module_name.camelCase()}}.delete({
+    await this.prismaService.{{module_name.snakeCase()}}.delete({
       where: { id },
     })
   }
@@ -186,7 +186,7 @@ export class {{module_name.pascalCase()}}PrismaRepository implements {{module_na
   async softDelete(id: number): Promise<void> {
     const entity = await this._get(id)
     entity.softDelete()
-    await this.prismaService.{{module_name.camelCase()}}.update({
+    await this.prismaService.{{module_name.snakeCase()}}.update({
       data: entity.toJSON(),
       where: { id },
     })
@@ -195,7 +195,7 @@ export class {{module_name.pascalCase()}}PrismaRepository implements {{module_na
   async restore(id: number): Promise<void> {
     const entity = await this.findByIdIncludingDeleted(id)
     entity.restore()
-    await this.prismaService.{{module_name.camelCase()}}.update({
+    await this.prismaService.{{module_name.snakeCase()}}.update({
       data: entity.toJSON(),
       where: { id },
     })
@@ -203,7 +203,7 @@ export class {{module_name.pascalCase()}}PrismaRepository implements {{module_na
 
   protected async _get(id: number): Promise<{{module_name.pascalCase()}}Entity> {
     try {
-      const {{module_name.camelCase()}} = await this.prismaService.{{module_name.camelCase()}}.findFirst({
+      const {{module_name.camelCase()}} = await this.prismaService.{{module_name.snakeCase()}}.findFirst({
         where: {
           id,
           deletedAt: null,
