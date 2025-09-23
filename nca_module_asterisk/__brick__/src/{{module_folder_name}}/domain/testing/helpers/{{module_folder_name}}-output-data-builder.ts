@@ -3,7 +3,7 @@ import { {{module_name.pascalCase()}}Output } from '@/{{module_folder_name}}/app
 
 type Props = {
   id?: number
-  {{#fields}}{{ name.camelCase() }}?: {{ tsType }};
+  {{#fields}}{{ name }}?: {{ tsType }};
   {{/fields}}
   createdAt?: Date
   updatedAt?: Date
@@ -13,7 +13,7 @@ type Props = {
 export function {{module_name.pascalCase()}}OutputDataBuilder(props: Props = {}): {{module_name.pascalCase()}}Output {
   return {
     id: props.id ?? faker.number.int({ min: 1 }),
-    {{#fields}}{{ name.camelCase() }}: props.{{ name.camelCase() }} ?? faker.person.fullName(),
+    {{#fields}}{{ name }}: props.{{ name }} ?? faker.person.fullName(),
     {{/fields}}
     createdAt: props.createdAt ?? new Date(),
     updatedAt: props.updatedAt ?? new Date(),

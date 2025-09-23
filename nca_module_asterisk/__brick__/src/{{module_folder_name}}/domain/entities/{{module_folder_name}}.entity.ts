@@ -3,7 +3,7 @@ import { {{module_name.pascalCase()}}ValidatorFactory } from '../validators/{{mo
 import { EntityValidationError } from '@/shared/domain/errors/validation-error'
 
 export type {{module_name.pascalCase()}}Props = {
-  {{#fields}}{{ name.camelCase() }}{{#isOptional}}?{{/isOptional}}: {{ tsType }};
+  {{#fields}}{{ name }}{{#isOptional}}?{{/isOptional}}: {{ tsType }};
   {{/fields}}
   createdAt?: Date
   updatedAt?: Date
@@ -23,7 +23,7 @@ export class {{module_name.pascalCase()}}Entity extends EntityAsterisk<{{module_
       ...this.props,
       ...data,
     })
-    {{#fields}}this.{{ name.camelCase() }} = data.{{ name.camelCase() }} ?? this.{{ name.camelCase() }};
+    {{#fields}}this.{{ name }} = data.{{ name }} ?? this.{{ name }};
     {{/fields}}
     this.touch()
   }
@@ -46,21 +46,14 @@ export class {{module_name.pascalCase()}}Entity extends EntityAsterisk<{{module_
     this.props.updatedAt = new Date()
   }
 
-  get name() {
-    return this.props.name
+  {{#fields}}
+  get {{ name }}() {
+    return this.props.{{ name }}
   }
-
-  private set name(value: string) {
-    this.props.name = value
+  private set {{ name }}(value: {{ tsType }}) {
+    this.props.{{ name }} = value
   }
-
-  get tenant_id() {
-    return this.props.tenant_id
-  }
-
-  private set tenant_id(value: number) {
-    this.props.tenant_id = value
-  }
+  {{/fields}}
 
   get createdAt() {
     return this.props.createdAt

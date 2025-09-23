@@ -8,6 +8,6 @@ export class Update{{module_name.pascalCase()}}Dto implements Omit<Update{{modul
   @ApiProperty({ description: '{{description}}' })
   {{#validators}}@{{.}}
   {{/validators}}{{#useTypeDate}}@Type(() => Date)
-  {{/useTypeDate}}{{name.camelCase()}}{{#isOptional}}?{{/isOptional}}: {{tsType}};
+  {{/useTypeDate}}{{name}}{{#isOptional}}?{{/isOptional}}: {{tsType}};
   {{/fields}}
 }

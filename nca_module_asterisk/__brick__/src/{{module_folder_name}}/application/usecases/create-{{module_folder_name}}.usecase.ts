@@ -6,7 +6,7 @@ import { UseCase as DefaultUseCase } from '@/shared/application/usecases/use-cas
 
 export namespace Create{{module_name.pascalCase()}}UseCase {
   export type Input = {
-    {{#fields}}{{ name.camelCase() }}{{#isOptional}}?{{/isOptional}}: {{ tsType }};
+    {{#fields}}{{ name }}{{#isOptional}}?{{/isOptional}}: {{ tsType }};
     {{/fields}}
   }
 
@@ -19,13 +19,13 @@ export namespace Create{{module_name.pascalCase()}}UseCase {
 
     async execute(input: Input): Promise<Output> {
       const { 
-        {{#fields}}{{ name.camelCase() }},
+        {{#fields}}{{ name }},
         {{/fields}}
        } = input
 
       {{#has_required}}
       if (
-        {{#required_fields}}{{^isFirstRequired}} || {{/isFirstRequired}}!{{ name.camelCase() }}
+        {{#required_fields}}{{^isFirstRequired}} || {{/isFirstRequired}}!{{ name }}
         {{/required_fields}}
       ) {
         throw new BadRequestError('Input data not provided');

@@ -5,7 +5,7 @@ import { {{module_name.pascalCase()}} } from '../../../../../shared/infrastructu
 export class {{module_name.pascalCase()}}ModelMapper {
   static toEntity(model: {{module_name.pascalCase()}}) {
     const data = {
-      {{#fields}}{{ name.camelCase() }}: model.{{ name.camelCase() }},
+      {{#fields}}{{ name }}: model.{{ name }},
       {{/fields}}
       createdAt: model.createdAt,
       updatedAt: model.updatedAt,

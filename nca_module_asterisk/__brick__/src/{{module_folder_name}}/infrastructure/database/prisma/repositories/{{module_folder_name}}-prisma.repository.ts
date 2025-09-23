@@ -8,7 +8,7 @@ import { StringUtils } from '@/shared/utils/string.utils'
 
 export class {{module_name.pascalCase()}}PrismaRepository implements {{module_name.pascalCase()}}Repository.Repository {
   sortableFields: string[] = [
-    {{#fields}}'{{ name.camelCase() }}',
+    {{#fields}}'{{ name }}',
     {{/fields}}
     'createdAt', 
     'updatedAt'

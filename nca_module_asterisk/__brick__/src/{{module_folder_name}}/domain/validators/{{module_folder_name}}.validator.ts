@@ -7,7 +7,7 @@ export class {{module_name.pascalCase()}}Rules {
   {{#fields}}
   {{#validators}}@{{.}}
   {{/validators}}{{#useTypeDate}}@Type(() => Date)
-  {{/useTypeDate}}{{name.camelCase()}}{{#isOptional}}?{{/isOptional}}: {{tsType}};
+  {{/useTypeDate}}{{name}}{{#isOptional}}?{{/isOptional}}: {{tsType}};
   {{/fields}}
 
   @IsDate()
@@ -15,12 +15,12 @@ export class {{module_name.pascalCase()}}Rules {
   createdAt?: Date
 
   constructor({ 
-    {{#fields}}{{ name.camelCase() }},
+    {{#fields}}{{ name }},
     {{/fields}}
     createdAt 
   }: {{module_name.pascalCase()}}Props) {
     Object.assign(this, { 
-      {{#fields}}{{ name.camelCase() }},
+      {{#fields}}{{ name }},
       {{/fields}}
       createdAt 
     })

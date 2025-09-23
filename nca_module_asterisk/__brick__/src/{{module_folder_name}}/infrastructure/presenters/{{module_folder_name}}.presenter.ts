@@ -9,7 +9,7 @@ export class {{module_name.pascalCase()}}Presenter {
   id: number
 
   {{#fields}}@ApiProperty({ description: '{{description}}' })
-  {{ name.camelCase() }}{{#isOptional}}?{{/isOptional}}: {{ tsType }};
+  {{ name }}{{#isOptional}}?{{/isOptional}}: {{ tsType }};
   {{/fields}}
 
   @ApiProperty({ description: 'Data de criação' })
@@ -18,7 +18,7 @@ export class {{module_name.pascalCase()}}Presenter {
 
   constructor(output: {{module_name.pascalCase()}}Output) {
     this.id = output.id
-    {{#fields}}this.{{ name.camelCase() }} = output.{{ name.camelCase() }};
+    {{#fields}}this.{{ name }} = output.{{ name }};
     {{/fields}}
     this.createdAt = output.createdAt
   }

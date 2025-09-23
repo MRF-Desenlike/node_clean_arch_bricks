@@ -6,7 +6,7 @@ import { BadRequestError } from '@/shared/application/errors/bad-request-error'
 export namespace Update{{module_name.pascalCase()}}UseCase {
   export type Input = {
     id: number
-    {{#fields}}{{ name.camelCase() }}{{#isOptional}}?{{/isOptional}}: {{ tsType }};
+    {{#fields}}{{ name }}{{#isOptional}}?{{/isOptional}}: {{ tsType }};
     {{/fields}}
   }
 
@@ -18,7 +18,7 @@ export namespace Update{{module_name.pascalCase()}}UseCase {
     async execute(input: Input): Promise<Output> {
       {{#has_required}}
       if (
-        {{#required_fields}}{{^isFirstRequired}} || {{/isFirstRequired}}!input.{{ name.camelCase() }}
+        {{#required_fields}}{{^isFirstRequired}} || {{/isFirstRequired}}!input.{{ name }}
         {{/required_fields}}
       ) {
         throw new BadRequestError('Input data not provided');
