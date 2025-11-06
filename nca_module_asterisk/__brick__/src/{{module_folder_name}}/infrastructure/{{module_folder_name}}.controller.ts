@@ -14,14 +14,7 @@ import {
 } from '@nestjs/common'
 import { Create{{module_name.pascalCase()}}Dto } from './dtos/create-{{module_folder_name}}.dto'
 import { Update{{module_name.pascalCase()}}Dto } from './dtos/update-{{module_folder_name}}.dto'
-import { Create{{module_name.pascalCase()}}UseCase } from '../application/usecases/create-{{module_folder_name}}.usecase'
-import { Update{{module_name.pascalCase()}}UseCase } from '../application/usecases/update-{{module_folder_name}}.usecase'
-import { Delete{{module_name.pascalCase()}}UseCase } from '../application/usecases/delete-{{module_folder_name}}.usecase'
-import { SoftDelete{{module_name.pascalCase()}}UseCase } from '../application/usecases/soft-delete-{{module_folder_name}}.usecase'
-import { Restore{{module_name.pascalCase()}}UseCase } from '../application/usecases/restore-{{module_folder_name}}.usecase'
-import { Get{{module_name.pascalCase()}}UseCase } from '../application/usecases/get-{{module_folder_name}}.usecase'
-import { List{{module_name.pascalCase()}}UseCase } from '../application/usecases/list-{{module_folder_name}}.usecase'
-import { List{{module_name.pascalCase()}}sDto } from './dtos/list-{{module_folder_name}}.dto'
+import { List{{module_name.pascalCase()}}Dto } from './dtos/list-{{module_folder_name}}.dto'
 import { {{module_name.pascalCase()}}Output } from '../application/dtos/{{module_folder_name}}-output'
 import {
   {{module_name.pascalCase()}}CollectionPresenter,
@@ -35,30 +28,31 @@ import {
   ApiTags,
   getSchemaPath,
 } from '@nestjs/swagger'
+import { CurrentUser, CurrentUserData } from '@/shared/infrastructure/decorators/current-user.decorator'
+import { Create{{module_name.pascalCase()}}Service } from '@/shared/application/services/{{module_folder_name}}/create-{{module_folder_name}}.service'
+import { Update{{module_name.pascalCase()}}Service } from '@/shared/application/services/{{module_folder_name}}/update-{{module_folder_name}}.service'
+import { Delete{{module_name.pascalCase()}}Service } from '@/shared/application/services/{{module_folder_name}}/delete-{{module_folder_name}}.service'
+import { Get{{module_name.pascalCase()}}Service } from '@/shared/application/services/{{module_folder_name}}/get-{{module_folder_name}}.service'
+import { List{{module_name.pascalCase()}}Service } from '@/shared/application/services/{{module_folder_name}}/list-{{module_folder_name}}.service'
+import { List{{module_name.pascalCase()}}UseCase } from '../application/usecases/list-{{module_folder_name}}.usecase'
 
 @ApiTags('{{module_folder_name}}')
 @Controller('{{module_folder_name}}')
 export class {{module_name.pascalCase()}}Controller {
-  @Inject(Create{{module_name.pascalCase()}}UseCase.UseCase)
-  private {{module_name.camelCase()}}UseCase: Create{{module_name.pascalCase()}}UseCase.UseCase
+  @Inject(Create{{module_name.pascalCase()}}Service)
+  private {{module_name.camelCase()}}Service: Create{{module_name.pascalCase()}}Service
 
-  @Inject(Update{{module_name.pascalCase()}}UseCase.UseCase)
-  private update{{module_name.pascalCase()}}UseCase: Update{{module_name.pascalCase()}}UseCase.UseCase
+  @Inject(Update{{module_name.pascalCase()}}Service)
+  private update{{module_name.pascalCase()}}Service: Update{{module_name.pascalCase()}}Service
 
-  @Inject(Delete{{module_name.pascalCase()}}UseCase.UseCase)
-  private delete{{module_name.pascalCase()}}UseCase: Delete{{module_name.pascalCase()}}UseCase.UseCase
+  @Inject(Delete{{module_name.pascalCase()}}Service)
+  private delete{{module_name.pascalCase()}}Service: Delete{{module_name.pascalCase()}}Service
 
-  @Inject(SoftDelete{{module_name.pascalCase()}}UseCase.UseCase)
-  private softDelete{{module_name.pascalCase()}}UseCase: SoftDelete{{module_name.pascalCase()}}UseCase.UseCase
+  @Inject(Get{{module_name.pascalCase()}}Service)
+  private get{{module_name.pascalCase()}}Service: Get{{module_name.pascalCase()}}Service
 
-  @Inject(Restore{{module_name.pascalCase()}}UseCase.UseCase)
-  private restore{{module_name.pascalCase()}}UseCase: Restore{{module_name.pascalCase()}}UseCase.UseCase
-
-  @Inject(Get{{module_name.pascalCase()}}UseCase.UseCase)
-  private get{{module_name.pascalCase()}}UseCase: Get{{module_name.pascalCase()}}UseCase.UseCase
-
-  @Inject(List{{module_name.pascalCase()}}UseCase.UseCase)
-  private list{{module_name.pascalCase()}}UseCase: List{{module_name.pascalCase()}}UseCase.UseCase
+  @Inject(List{{module_name.pascalCase()}}Service)
+  private list{{module_name.pascalCase()}}Service: List{{module_name.pascalCase()}}Service
 
   @Inject(AuthService)
   private authService: AuthService
@@ -71,13 +65,24 @@ export class {{module_name.pascalCase()}}Controller {
     return new {{module_name.pascalCase()}}CollectionPresenter(output)
   }
 
+  @ApiBearerAuth()
   @ApiResponse({
     status: 422,
     description: 'Corpo da requisição com dados inválidos',
   })
+  @UseGuards(AuthGuard)
   @Post()
-  async create(@Body() {{module_name.camelCase()}}Dto: Create{{module_name.pascalCase()}}Dto) {
-    const output = await this.{{module_name.camelCase()}}UseCase.execute({{module_name.camelCase()}}Dto)
+  async create(
+    @Body() {{module_name.camelCase()}}Dto: Create{{module_name.pascalCase()}}Dto,
+    @CurrentUser() user: CurrentUserData,
+  ) {
+    const companyId = user.isSuperAdmin && {{module_name.camelCase()}}Dto.companyId
+      ? {{module_name.camelCase()}}Dto.companyId
+      : user.companyId
+    const output = await this.{{module_name.camelCase()}}Service.execute({
+      ...{{module_name.camelCase()}}Dto,
+      companyId,
+    })
     return {{module_name.pascalCase()}}Controller.{{module_name.camelCase()}}ToResponse(output)
   }
 
@@ -121,8 +126,17 @@ export class {{module_name.pascalCase()}}Controller {
   })
   @UseGuards(AuthGuard)
   @Get()
-  async search(@Query() searchParams: List{{module_name.pascalCase()}}sDto) {
-    const output = await this.list{{module_name.pascalCase()}}UseCase.execute(searchParams)
+  async search(
+    @Query() searchParams: List{{module_name.pascalCase()}}Dto,
+    @CurrentUser() user: CurrentUserData,
+  ) {
+    const companyId = user.isSuperAdmin && searchParams.companyId
+      ? searchParams.companyId
+      : user.companyId
+    const output = await this.list{{module_name.pascalCase()}}Service.execute({
+      ...searchParams,
+      companyId,
+    })
     return {{module_name.pascalCase()}}Controller.list{{module_name.pascalCase()}}sToResponse(output)
   }
 
@@ -137,8 +151,15 @@ export class {{module_name.pascalCase()}}Controller {
   })
   @UseGuards(AuthGuard)
   @Get(':id')
-  async findOne(@Param('id') id: number) {
-    const output = await this.get{{module_name.pascalCase()}}UseCase.execute({ id })
+  async findOne(
+    @Param('id') id: number,
+    @Query() searchParams: List{{module_name.pascalCase()}}Dto,
+    @CurrentUser() user: CurrentUserData,
+  ) {
+    const companyId = user.isSuperAdmin && searchParams.companyId
+      ? searchParams.companyId
+      : user.companyId
+    const output = await this.get{{module_name.pascalCase()}}Service.execute({ id, companyId })
     return {{module_name.pascalCase()}}Controller.{{module_name.camelCase()}}ToResponse(output)
   }
 
@@ -157,52 +178,20 @@ export class {{module_name.pascalCase()}}Controller {
   })
   @UseGuards(AuthGuard)
   @Put(':id')
-  async update(@Param('id') id: number, @Body() update{{module_name.pascalCase()}}Dto: Update{{module_name.pascalCase()}}Dto) {
-    const output = await this.update{{module_name.pascalCase()}}UseCase.execute({
+  async update(
+    @Param('id') id: number, 
+    @Body() update{{module_name.pascalCase()}}Dto: Update{{module_name.pascalCase()}}Dto,
+    @CurrentUser() user: CurrentUserData,
+  ) {
+    const companyId = user.isSuperAdmin && update{{module_name.pascalCase()}}Dto.companyId
+      ? update{{module_name.pascalCase()}}Dto.companyId
+      : user.companyId
+    const output = await this.update{{module_name.pascalCase()}}Service.execute({
       id,
+      companyId,
       ...update{{module_name.pascalCase()}}Dto,
     })
     return {{module_name.pascalCase()}}Controller.{{module_name.camelCase()}}ToResponse(output)
-  }
-
-  @ApiBearerAuth()
-  @ApiResponse({
-    status: 204,
-    description: '{{module_name}} deletado com sucesso (soft delete)',
-  })
-  @ApiResponse({
-    status: 401,
-    description: 'Acesso não autorizado',
-  })
-  @ApiResponse({
-    status: 404,
-    description: '{{module_name}} não encontrado',
-  })
-  @UseGuards(AuthGuard)
-  @HttpCode(204)
-  @Patch(':id/soft-delete')
-  async softDelete(@Param('id') id: number) {
-    await this.softDelete{{module_name.pascalCase()}}UseCase.execute({ id })
-  }
-
-  @ApiBearerAuth()
-  @ApiResponse({
-    status: 204,
-    description: '{{module_name}} restaurado com sucesso',
-  })
-  @ApiResponse({
-    status: 401,
-    description: 'Acesso não autorizado',
-  })
-  @ApiResponse({
-    status: 404,
-    description: '{{module_name}} não encontrado',
-  })
-  @UseGuards(AuthGuard)
-  @HttpCode(204)
-  @Patch(':id/restore')
-  async restore(@Param('id') id: number) {
-    await this.restore{{module_name.pascalCase()}}UseCase.execute({ id })
   }
 
   @ApiBearerAuth()
@@ -221,7 +210,14 @@ export class {{module_name.pascalCase()}}Controller {
   @UseGuards(AuthGuard)
   @HttpCode(204)
   @Delete(':id')
-  async remove(@Param('id') id: number) {
-    await this.delete{{module_name.pascalCase()}}UseCase.execute({ id })
+  async remove(
+    @Param('id') id: number,
+    @Query() searchParams: List{{module_name.pascalCase()}}Dto,
+    @CurrentUser() user: CurrentUserData,
+  ) {
+    const companyId = user.isSuperAdmin && searchParams.companyId
+      ? searchParams.companyId
+      : user.companyId
+    await this.delete{{module_name.pascalCase()}}Service.execute({ id, companyId })
   }
 }

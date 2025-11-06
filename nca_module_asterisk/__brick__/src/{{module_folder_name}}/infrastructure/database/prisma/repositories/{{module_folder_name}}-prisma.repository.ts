@@ -10,8 +10,6 @@ export class {{module_name.pascalCase()}}PrismaRepository implements {{module_na
   sortableFields: string[] = [
     {{#fields}}'{{ name }}',
     {{/fields}}
-    'createdAt', 
-    'updatedAt'
   ]
 
   constructor(private prismaService: PrismaAsteriskService) {}
@@ -23,11 +21,13 @@ export class {{module_name.pascalCase()}}PrismaRepository implements {{module_na
     const orderByField = sortable ? props.sort : 'createdAt'
     const orderByDir = sortable ? props.sortDir : 'desc'
 
+    const whereClause = { tenant_id: props.tenant_id ? Number(props.tenant_id) : undefined }
+
     // Para consistência com o teste, vamos replicar exatamente o comportamento do in-memory
     if (props.filter) {
       // Buscar todos os itens primeiro
       const all{{module_name.pascalCase()}}s = await this.prismaService.{{module_name.snakeCase()}}.findMany({
-        where: { deletedAt: null },
+        where: whereClause,
       })
 
       // Converter para entidades
@@ -100,9 +100,6 @@ export class {{module_name.pascalCase()}}PrismaRepository implements {{module_na
       })
     }
 
-    // Para queries sem filtro, usar a implementação normal do Prisma
-    const whereClause = { deletedAt: null }
-
     const count = await this.prismaService.{{module_name.snakeCase()}}.count({
       where: whereClause,
     })
@@ -134,13 +131,13 @@ export class {{module_name.pascalCase()}}PrismaRepository implements {{module_na
     })
   }
 
-  findById(id: number | string): Promise<{{module_name.pascalCase()}}Entity> {
-    return this._get(id)
+  findById(id: number | string, tenant_id: number): Promise<{{module_name.pascalCase()}}Entity> {
+    return this._get(id, tenant_id)
   }
 
   async findAll(): Promise<{{module_name.pascalCase()}}Entity[]> {
     const models = await this.prismaService.{{module_name.snakeCase()}}.findMany({
-      where: { deletedAt: null },
+      where: { },
     })
     return models.map(model => {{module_name.pascalCase()}}ModelMapper.toEntity(model))
   }
@@ -178,39 +175,25 @@ export class {{module_name.pascalCase()}}PrismaRepository implements {{module_na
     })
   }
 
-  async delete(id: number | string): Promise<void> {
-    await this._get(id)
+  async delete(id: number | string, tenant_id: number): Promise<void> {
+    await this._get(id, tenant_id)
     await this.prismaService.{{module_name.snakeCase()}}.delete({
       where: { id: id as number },
     })
   }
 
   async softDelete(id: number | string): Promise<void> {
-    const entity = await this._get(id)
-    const data = entity.toJSON()
-    entity.softDelete()
-    await this.prismaService.{{module_name.snakeCase()}}.update({
-      data: { ...data, id: data.id as number }
-      where: { id: id as number },
-    })
   }
 
   async restore(id: number | string): Promise<void> {
-    const entity = await this.findByIdIncludingDeleted(id)
-    const data = entity.toJSON()
-    entity.restore()
-    await this.prismaService.{{module_name.snakeCase()}}.update({
-      data: { ...data, id: data.id as number }
-      where: { id: id as number },
-    })
   }
 
-  protected async _get(id: number | string): Promise<{{module_name.pascalCase()}}Entity> {
+  protected async _get(id: number | string, tenant_id?: number): Promise<{{module_name.pascalCase()}}Entity> {
     try {
       const {{module_name.camelCase()}} = await this.prismaService.{{module_name.snakeCase()}}.findFirst({
         where: {
           id: id as number,
-          deletedAt: null,
+          tenant_id,
         },
       })
       if (!{{module_name.camelCase()}}) {

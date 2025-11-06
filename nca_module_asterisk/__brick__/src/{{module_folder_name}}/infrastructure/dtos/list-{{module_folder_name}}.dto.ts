@@ -3,7 +3,7 @@ import { List{{module_name.pascalCase()}}UseCase } from '@/{{module_folder_name}
 import { ApiPropertyOptional } from '@nestjs/swagger'
 import { IsOptional } from 'class-validator'
 
-export class List{{module_name.pascalCase()}}sDto implements List{{module_name.pascalCase()}}UseCase.Input {
+export class List{{module_name.pascalCase()}}Dto implements List{{module_name.pascalCase()}}UseCase.Input {
   @ApiPropertyOptional({ description: 'Página que será retornada' })
   @IsOptional()
   page?: number
@@ -29,4 +29,8 @@ export class List{{module_name.pascalCase()}}sDto implements List{{module_name.p
   })
   @IsOptional()
   filter?: string
+
+  @ApiPropertyOptional({ description: 'ID da empresa (companyId)' })
+  @IsOptional()
+  companyId?: string
 }

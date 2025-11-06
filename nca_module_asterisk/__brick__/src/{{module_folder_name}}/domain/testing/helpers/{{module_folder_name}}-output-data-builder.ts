@@ -5,9 +5,6 @@ type Props = {
   id?: number | string
   {{#fields}}{{ name }}?: {{ tsType }};
   {{/fields}}
-  createdAt?: Date
-  updatedAt?: Date
-  deletedAt?: Date
 }
 
 export function {{module_name.pascalCase()}}OutputDataBuilder(props: Props = {}): {{module_name.pascalCase()}}Output {
@@ -15,8 +12,5 @@ export function {{module_name.pascalCase()}}OutputDataBuilder(props: Props = {})
     id: props.id ?? (typeof props.id === 'number' ? faker.number.int({ min: 1 }) : faker.string.uuid()),
     {{#fields}}{{ name }}: props.{{ name }} ?? faker.person.fullName(),
     {{/fields}}
-    createdAt: props.createdAt ?? new Date(),
-    updatedAt: props.updatedAt ?? new Date(),
-    deletedAt: props.deletedAt,
   }
 }

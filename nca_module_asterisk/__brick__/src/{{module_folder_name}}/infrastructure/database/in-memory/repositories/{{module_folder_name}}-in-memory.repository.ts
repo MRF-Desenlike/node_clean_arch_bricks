@@ -13,8 +13,6 @@ export class {{module_name.pascalCase()}}InMemoryRepository
   sortableFields: string[] = [
     {{#fields}}'{{ name }}',
     {{/fields}}
-    'createdAt', 
-    'updatedAt'
   ]
 
   async search(

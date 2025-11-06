@@ -10,19 +10,13 @@ export class {{module_name.pascalCase()}}Rules {
   {{/useTypeDate}}{{name}}{{#isOptional}}?{{/isOptional}}: {{tsType}};
   {{/fields}}
 
-  @IsDate()
-  @IsOptional()
-  createdAt?: Date
-
   constructor({ 
     {{#fields}}{{ name }},
     {{/fields}}
-    createdAt 
   }: {{module_name.pascalCase()}}Props) {
     Object.assign(this, { 
       {{#fields}}{{ name }},
       {{/fields}}
-      createdAt 
     })
   }
 }

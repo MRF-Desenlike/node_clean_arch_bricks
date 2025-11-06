@@ -12,9 +12,16 @@ import { Restore{{module_name.pascalCase()}}UseCase } from '../application/useca
 import { PrismaAsteriskService } from '@/shared/infrastructure/database/prismaAsterisk/prisma-asterisk.service'
 import { {{module_name.pascalCase()}}PrismaRepository } from './database/prisma/repositories/{{module_folder_name}}-prisma.repository'
 import { AuthModule } from '@/auth/infrastructure/auth.module'
+import { TenantsModule } from '@/tenants/infrastructure/tenants.module'
+import { CompaniesModule } from '@/companies/infrastructure/companies.module'
+import { Create{{module_name.pascalCase()}}Service } from '@/shared/application/services/{{module_folder_name}}/create-{{module_folder_name}}.service'
+import { List{{module_name.pascalCase()}}Service } from '@/shared/application/services/{{module_folder_name}}/list-{{module_folder_name}}.service'
+import { Get{{module_name.pascalCase()}}Service } from '@/shared/application/services/{{module_folder_name}}/get-{{module_folder_name}}.service'
+import { Update{{module_name.pascalCase()}}Service } from '@/shared/application/services/{{module_folder_name}}/update-{{module_folder_name}}.service'
+import { Delete{{module_name.pascalCase()}}Service } from '@/shared/application/services/{{module_folder_name}}/delete-{{module_folder_name}}.service'
 
 @Module({
-  imports: [AuthModule],
+  imports: [AuthModule, TenantsModule, CompaniesModule],
   controllers: [{{module_name.pascalCase()}}Controller],
   providers: [
     {
@@ -79,6 +86,11 @@ import { AuthModule } from '@/auth/infrastructure/auth.module'
       },
       inject: ['{{module_name.pascalCase()}}Repository'],
     },
+    Create{{module_name.pascalCase()}}Service,
+    List{{module_name.pascalCase()}}Service,
+    Get{{module_name.pascalCase()}}Service,
+    Update{{module_name.pascalCase()}}Service,
+    Delete{{module_name.pascalCase()}}Service,
   ],
 })
 export class {{module_name.pascalCase()}}Module {}

@@ -21,7 +21,7 @@ import { SoftDelete{{module_name.pascalCase()}}UseCase } from '../application/us
 import { Restore{{module_name.pascalCase()}}UseCase } from '../application/usecases/restore-{{module_folder_name}}.usecase'
 import { Get{{module_name.pascalCase()}}UseCase } from '../application/usecases/get-{{module_folder_name}}.usecase'
 import { List{{module_name.pascalCase()}}UseCase } from '../application/usecases/list-{{module_folder_name}}.usecase'
-import { List{{module_name.pascalCase()}}sDto } from './dtos/list-{{module_folder_name}}.dto'
+import { List{{module_name.pascalCase()}}Dto } from './dtos/list-{{module_folder_name}}.dto'
 import { {{module_name.pascalCase()}}Output } from '../application/dtos/{{module_folder_name}}-output'
 import {
   {{module_name.pascalCase()}}CollectionPresenter,
@@ -125,7 +125,7 @@ export class {{module_name.pascalCase()}}Controller {
   })
   @UseGuards(AuthGuard)
   @Get()
-  async search(@Query() searchParams: List{{module_name.pascalCase()}}sDto) {
+  async search(@Query() searchParams: List{{module_name.pascalCase()}}Dto) {
     const output = await this.list{{module_name.pascalCase()}}UseCase.execute(searchParams)
     return {{module_name.pascalCase()}}Controller.list{{module_name.pascalCase()}}sToResponse(output)
   }

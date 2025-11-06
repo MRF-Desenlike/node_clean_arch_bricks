@@ -5,6 +5,12 @@ import { UseCase as DefaultUseCase } from '@/shared/application/usecases/use-cas
 export namespace Get{{module_name.pascalCase()}}UseCase {
   export type Input = {
     id: number | string
+    tenant_id: number
+  }
+
+  export type ServiceInput = {
+    id: number | string
+    companyId: string
   }
 
   export type Output = {{module_name.pascalCase()}}Output

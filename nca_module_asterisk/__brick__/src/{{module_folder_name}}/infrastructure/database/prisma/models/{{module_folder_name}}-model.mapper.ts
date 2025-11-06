@@ -7,9 +7,6 @@ export class {{module_name.pascalCase()}}ModelMapper {
     const data = {
       {{#fields}}{{ name }}: model.{{ name }},
       {{/fields}}
-      createdAt: model.createdAt,
-      updatedAt: model.updatedAt,
-      deletedAt: model.deletedAt,
     }
 
     try {

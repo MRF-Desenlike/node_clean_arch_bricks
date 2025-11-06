@@ -20,7 +20,6 @@ export class {{module_name.pascalCase()}}Presenter {
     this.id = output.id
     {{#fields}}this.{{ name }} = output.{{ name }};
     {{/fields}}
-    this.createdAt = output.createdAt
   }
 }
 

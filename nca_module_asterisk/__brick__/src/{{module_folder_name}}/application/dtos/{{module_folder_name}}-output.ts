@@ -4,9 +4,6 @@ export type {{module_name.pascalCase()}}Output = {
   id: number | string
   {{#fields}}{{ name }}{{#isOptional}}?{{/isOptional}}: {{ tsType }};
   {{/fields}}
-  createdAt: Date
-  updatedAt: Date
-  deletedAt?: Date
 }
 
 export class {{module_name.pascalCase()}}OutputMapper {
