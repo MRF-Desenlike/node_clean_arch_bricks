@@ -79,7 +79,7 @@ export class {{module_name.pascalCase()}}InMemoryRepository
     sortDir: SortDirection | null,
   ): Promise<{{module_name.pascalCase()}}Entity[]> {
     return !sort
-      ? super.applySort(items, 'createdAt', 'desc')
+      ? super.applySort(items, 'id', 'desc')
       : super.applySort(items, sort, sortDir)
   }
 }

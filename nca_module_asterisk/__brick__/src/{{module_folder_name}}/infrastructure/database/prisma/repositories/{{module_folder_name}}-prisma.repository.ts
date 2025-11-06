@@ -18,7 +18,7 @@ export class {{module_name.pascalCase()}}PrismaRepository implements {{module_na
     props: {{module_name.pascalCase()}}Repository.SearchParams,
   ): Promise<{{module_name.pascalCase()}}Repository.SearchResult> {
     const sortable = this.sortableFields?.includes(props.sort) || false
-    const orderByField = sortable ? props.sort : 'createdAt'
+    const orderByField = sortable ? props.sort : 'id'
     const orderByDir = sortable ? props.sortDir : 'desc'
 
     const whereClause = { tenant_id: props.tenant_id ? Number(props.tenant_id) : undefined }
