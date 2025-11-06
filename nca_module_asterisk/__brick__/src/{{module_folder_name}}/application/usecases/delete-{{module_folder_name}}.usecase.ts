@@ -4,6 +4,7 @@ import { UseCase as DefaultUseCase } from '@/shared/application/usecases/use-cas
 export namespace Delete{{module_name.pascalCase()}}UseCase {
   export type Input = {
     id: number | string
+    tenant_id: number
   }
 
   export type Output = void

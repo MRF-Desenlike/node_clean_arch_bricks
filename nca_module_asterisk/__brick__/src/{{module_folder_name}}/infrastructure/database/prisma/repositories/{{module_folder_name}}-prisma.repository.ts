@@ -168,7 +168,7 @@ export class {{module_name.pascalCase()}}PrismaRepository implements {{module_na
     await this._get(entity._id)
     const data = entity.toJSON()
     await this.prismaService.{{module_name.snakeCase()}}.update({
-      data: { ...data, id: data.id as number }
+      data: { ...data, id: data.id as number },
       where: {
         id: entity._id as number,
       },
